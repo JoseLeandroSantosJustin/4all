@@ -14,4 +14,15 @@ const logger = winston.createLogger({
   ]
 });
 
-export { logger };
+const capitalizeAllFirstLetters = (string: string): string => {
+  const words = string.split(' ');
+  const captalizedWords: Array<string> = [];
+
+  words.forEach((word) => {
+    captalizedWords.push(word.charAt(0).toUpperCase() + word.slice(1));
+  });
+
+  return captalizedWords.join(' ');
+};
+
+export { logger, capitalizeAllFirstLetters };

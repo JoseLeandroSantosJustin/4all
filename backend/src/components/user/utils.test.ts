@@ -1,5 +1,5 @@
 import winston from 'winston';
-import { logger } from './utils';
+import { logger, capitalizeAllFirstLetters } from './utils';
 import { assert } from 'chai';
 import moment from 'moment';
 
@@ -22,5 +22,16 @@ describe('Unit test user/utils file', () => {
     });
 
     xit('Transports test');
+  });
+
+  describe('When involking capitalizeAllFirstLetters', () => {
+    describe('Should captalize all first initial words from a setence', () => {
+      it('Then return the new given sentence', () => {
+        assert.equal(
+          capitalizeAllFirstLetters('jose leandro santos justin'),
+          'Jose Leandro Santos Justin'
+        );
+      });
+    });
   });
 });
