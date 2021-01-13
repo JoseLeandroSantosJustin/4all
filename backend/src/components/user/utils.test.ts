@@ -3,7 +3,7 @@ import { logger } from './utils';
 import { assert } from 'chai';
 import moment from 'moment';
 
-describe('Unit test logger/logger', () => {
+describe('Unit test user/utils file', () => {
   describe('When setting up logger constant', () => {
     it("Should set level to 'silly'", () => {
       assert.equal(logger.level, 'silly');
