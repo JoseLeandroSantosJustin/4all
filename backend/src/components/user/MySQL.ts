@@ -1,5 +1,4 @@
 import { Sequelize } from 'sequelize';
-import { logger } from './utils';
 
 export default class MySQL {
   /**
@@ -21,34 +20,7 @@ export default class MySQL {
     return new Sequelize(database, username, password, {
       host: host,
       port: port,
-      dialect: 'mysql',
-      define: {
-        freezeTableName: true,
-        timestamps: false
-      }
-    });
-  }
-
-  /**
-   * Method to test connection
-   * @param connection Sequelize instance
-   * @returns Throws an error if is not connected
-   */
-  public static isConnected(connection: Sequelize): Promise<boolean> {
-    return new Promise((resolve, reject) => {
-      connection
-        .authenticate()
-        .then(() => {
-          resolve(true);
-        })
-        .catch((error) => {
-          logger.error({
-            message: error.message,
-            stack: error.stack
-          });
-
-          reject(false);
-        });
+      dialect: 'mysql'
     });
   }
 }
