@@ -21,7 +21,11 @@ export default class MySQL {
     return new Sequelize(database, username, password, {
       host: host,
       port: port,
-      dialect: 'mysql'
+      dialect: 'mysql',
+      define: {
+        freezeTableName: true,
+        timestamps: false
+      }
     });
   }
 
