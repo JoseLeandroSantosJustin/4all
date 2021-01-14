@@ -25,10 +25,10 @@ describe('Unit test user/utils file', () => {
   });
 
   describe('When involking capitalizeAllFirstLetters', () => {
-    describe('Should captalize all first initial words from a setence', () => {
+    describe('Should captalize all just first initial letters from a setence', () => {
       it('Then return the new given sentence', () => {
         assert.equal(
-          capitalizeAllFirstLetters('jose leandro santos justin'),
+          capitalizeAllFirstLetters('jOSE lEANDRO sANTOS jUSTIN'),
           'Jose Leandro Santos Justin'
         );
       });

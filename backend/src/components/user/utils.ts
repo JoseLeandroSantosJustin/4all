@@ -15,7 +15,7 @@ const logger = winston.createLogger({
 });
 
 const capitalizeAllFirstLetters = (string: string): string => {
-  const words = string.split(' ');
+  const words = string.toLowerCase().split(' ');
   const captalizedWords: Array<string> = [];
 
   words.forEach((word) => {
