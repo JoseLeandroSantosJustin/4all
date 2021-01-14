@@ -6,6 +6,13 @@ export default class User {
   private email = '';
   private password = '';
 
+  constructor(name: string, email: string, password: string, id?: number) {
+    this.setName(name);
+    this.setEmail(email);
+    this.setPassword(password);
+    id !== undefined ? this.setId(id) : null;
+  }
+
   public setId(id: number): void {
     this.id = id;
   }
