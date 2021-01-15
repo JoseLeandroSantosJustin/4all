@@ -203,7 +203,10 @@ describe('Unit test user/userController', () => {
                 // @ts-ignore
                 userDALCreateUserExpectation.verify();
                 user.setId(94);
-                assert.deepEqual(result, user);
+                assert.deepEqual(
+                  result,
+                  new User(name, email, 'Password is hidden', 94)
+                );
               });
           });
 

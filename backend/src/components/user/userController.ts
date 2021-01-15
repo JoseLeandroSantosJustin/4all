@@ -31,8 +31,7 @@ const createUser = (
     userDAL
       .createUser(user)
       .then((result) => {
-        user.setId(result.insertId);
-        resolve(user);
+        resolve(new User(name, email, 'Password is hidden', result.insertId));
       })
       .catch((error) => {
         reject(error);
