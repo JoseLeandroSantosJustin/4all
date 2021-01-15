@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "config": "^3.3.3",
+    "joi": "^17.3.0",
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
     "winston": "^3.3.3"
