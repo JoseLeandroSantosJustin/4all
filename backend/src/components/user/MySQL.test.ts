@@ -7,8 +7,8 @@ describe('Unit test user/MySQL class', () => {
     sinon.restore();
   });
 
-  describe('When involking createConnection', () => {
-    describe('Should configure Sequelize', () => {
+  describe('When involking startConnection', () => {
+    describe('Should configure MySQL pool connection', () => {
       it('With the given paremeters', () => {
         const database = 'database';
         const username = 'username';
@@ -16,7 +16,7 @@ describe('Unit test user/MySQL class', () => {
         const host = 'host';
         const port = 9494;
 
-        const connection = MySQL.createConnection(
+        const connection = MySQL.startConnection(
           database,
           username,
           password,
@@ -24,11 +24,36 @@ describe('Unit test user/MySQL class', () => {
           port
         );
 
-        assert.equal(database, connection.config.database);
-        assert.equal(username, connection.config.username);
-        assert.equal(password, connection.config.password);
-        assert.equal(host, connection.config.host);
-        assert.equal(port, Number(connection.config.port));
+        // @ts-ignore
+        assert.equal(connection.config.connectionConfig.database, database);
+        // @ts-ignore
+        assert.equal(connection.config.connectionConfig.user, username);
+        // @ts-ignore
+        assert.equal(connection.config.connectionConfig.password, password);
+        // @ts-ignore
+        assert.equal(connection.config.connectionConfig.host, host);
+        // @ts-ignore
+        assert.equal(connection.config.connectionConfig.port, port);
+      });
+    });
+
+    xit('When involking execQuery');
+
+    describe('When involking "closeConnection"', function () {
+      describe('Should involke "end" method of the given parameter', function () {
+        it('Then close the given connection', function () {
+          const connection = {
+            end: () => {
+              null;
+            }
+          };
+          const connectionSpy = sinon.spy(connection, 'end');
+
+          // @ts-ignore
+          MySQL.closeConnection(connection);
+          assert.isTrue(connectionSpy.calledOnce);
+          connectionSpy.restore();
+        });
       });
     });
   });

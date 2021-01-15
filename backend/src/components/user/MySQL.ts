@@ -1,26 +1,58 @@
-import { Sequelize } from 'sequelize';
+import mysql from 'mysql2';
 
 export default class MySQL {
   /**
-   * Create a connection using by instantiating Sequelize
+   * Create a pool connection
    * @param database Database schema
    * @param username Username to access database
    * @param password Password to access database
    * @param host Database host machine
    * @param port Host port
-   * @returns Sequelize connection
+   * @returns MySQL pool connection
    */
-  public static createConnection(
+  public static startConnection(
     database: string,
     username: string,
     password: string,
     host: string,
     port: number
-  ): Sequelize {
-    return new Sequelize(database, username, password, {
+  ): mysql.Pool {
+    return mysql.createPool({
+      database: database,
+      user: username,
+      password: password,
       host: host,
       port: port,
-      dialect: 'mysql'
+      waitForConnections: true,
+      connectionLimit: 10,
+      queueLimit: 0
     });
+  }
+
+  /**
+   * @param connection MySQL pool connection
+   * @param query Query to be executed
+   * @param options Query values
+   */
+  public static execQuery(
+    connection: mysql.Pool,
+    query: string,
+    options?: Array<any>
+  ): Promise<any> {
+    return new Promise((resolve, reject) => {
+      connection.query(query, options, (err, result) => {
+        if (err) reject(err);
+
+        resolve(result);
+      });
+    });
+  }
+
+  /**
+   * End a pool connection
+   * @param connection MySQL pool connection
+   */
+  public static closeConnection(connection: mysql.Pool): void {
+    connection.end();
   }
 }

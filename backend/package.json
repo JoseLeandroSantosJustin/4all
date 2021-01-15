@@ -44,7 +44,6 @@
   "dependencies": {
     "moment": "^2.29.1",
     "mysql2": "^2.2.5",
-    "sequelize": "^6.3.5",
     "winston": "^3.3.3"
   }
 }
