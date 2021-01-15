@@ -8,5 +8,8 @@ module.exports = {
   },
   node: {
     port: 8080
+  },
+  bcrypt: {
+    salt: 10
   }
 };

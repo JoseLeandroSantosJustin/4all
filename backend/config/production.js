@@ -8,5 +8,8 @@ module.exports = {
   },
   node: {
     port: process.env.NODE_PORT
+  },
+  bcrypt: {
+    salt: process.env.BCRYPT_SALT
   }
 };
