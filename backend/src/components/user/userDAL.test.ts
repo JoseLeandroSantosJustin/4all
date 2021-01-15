@@ -4,6 +4,7 @@ import MySQL from './MySQL';
 import { startConnection, createUser, readAllUsers } from './userDAL';
 import { assert } from 'chai';
 import User from './User';
+import * as utils from './utils';
 
 describe('Unit test user/userDAL', () => {
   beforeEach(() => {
@@ -31,9 +32,15 @@ describe('Unit test user/userDAL', () => {
   });
 
   describe('When involking createUser', () => {
-    describe('Should involke startConnection, execQuery with insert statement and closeConnection', () => {
+    describe('Should involke startConnection, execQuery with insert statement, hashPassword and closeConnection', () => {
       it('If there are no errors in the execQuery', async () => {
         const user = new User('Teste', 'Teste@teste.com', '12345678');
+
+        const hashPasswordExpectation = sinon
+          .mock(utils)
+          .expects('hashPassword')
+          .withArgs('12345678')
+          .returns('encryptedPassword');
 
         // @ts-ignore
         sinon.stub(MySQL, 'startConnection').returns('connection');
@@ -43,7 +50,7 @@ describe('Unit test user/userDAL', () => {
           .withArgs(
             'connection',
             'INSERT INTO user(email, password, name) VALUES(?, ?, ?)',
-            [user.getEmail(), user.getPassword(), user.getName()]
+            [user.getEmail(), 'encryptedPassword', user.getName()]
           )
           .resolves(true);
 
@@ -52,6 +59,8 @@ describe('Unit test user/userDAL', () => {
           .returns('');
 
         await createUser(user).then((result) => {
+          // @ts-ignore
+          hashPasswordExpectation.verify();
           // @ts-ignore
           execQueryExpectation.verify();
           // @ts-ignore
@@ -63,6 +72,12 @@ describe('Unit test user/userDAL', () => {
       it('If execQuery throws an error', async () => {
         const user = new User('Teste', 'Teste@teste.com', '12345678');
 
+        const hashPasswordExpectation = sinon
+          .mock(utils)
+          .expects('hashPassword')
+          .withArgs('12345678')
+          .returns('encryptedPassword');
+
         // @ts-ignore
         sinon.stub(MySQL, 'startConnection').returns('connection');
         const mysqlMock = sinon.mock(MySQL);
@@ -71,7 +86,7 @@ describe('Unit test user/userDAL', () => {
           .withArgs(
             'connection',
             'INSERT INTO user(email, password, name) VALUES(?, ?, ?)',
-            [user.getEmail(), user.getPassword(), user.getName()]
+            [user.getEmail(), 'encryptedPassword', user.getName()]
           )
           .rejects('Error caught');
 
@@ -80,6 +95,8 @@ describe('Unit test user/userDAL', () => {
           .returns('');
 
         await createUser(user).catch((error) => {
+          // @ts-ignore
+          hashPasswordExpectation.verify();
           // @ts-ignore
           execQueryExpectation.verify();
           // @ts-ignore

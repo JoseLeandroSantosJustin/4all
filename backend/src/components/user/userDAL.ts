@@ -1,6 +1,7 @@
 import mysql from 'mysql2';
 import config from 'config';
 import MySQL from './MySQL';
+import { hashPassword } from './utils';
 import User from './User';
 
 const startConnection = (): mysql.Pool => {
@@ -22,7 +23,7 @@ const createUser = (user: User): Promise<any> => {
     MySQL.execQuery(
       connection,
       'INSERT INTO user(email, password, name) VALUES(?, ?, ?)',
-      [user.getEmail(), user.getPassword(), user.getName()]
+      [user.getEmail(), hashPassword(user.getPassword()), user.getName()]
     )
       .then((result) => {
         MySQL.closeConnection(connection);
