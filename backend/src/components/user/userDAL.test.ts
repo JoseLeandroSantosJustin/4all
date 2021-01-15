@@ -43,7 +43,7 @@ describe('Unit test user/userDAL', () => {
           .withArgs(
             'connection',
             'INSERT INTO user(email, password, name) VALUES(?, ?, ?)',
-            [user.getEmail(), user.getPassword(), user.getEmail()]
+            [user.getEmail(), user.getPassword(), user.getName()]
           )
           .resolves(true);
 
@@ -71,7 +71,7 @@ describe('Unit test user/userDAL', () => {
           .withArgs(
             'connection',
             'INSERT INTO user(email, password, name) VALUES(?, ?, ?)',
-            [user.getEmail(), user.getPassword(), user.getEmail()]
+            [user.getEmail(), user.getPassword(), user.getName()]
           )
           .rejects('Error caught');
 
