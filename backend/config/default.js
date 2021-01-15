@@ -5,5 +5,8 @@ module.exports = {
     password: '12345678',
     host: 'localhost',
     port: 3306
+  },
+  node: {
+    port: 8080
   }
 };

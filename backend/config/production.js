@@ -5,5 +5,8 @@ module.exports = {
     password: process.env.MYSQL_PASSWORD,
     host: process.env.MYSQL_HOST,
     port: process.env.MYSQL_PORT
+  },
+  node: {
+    port: process.env.NODE_PORT
   }
 };
