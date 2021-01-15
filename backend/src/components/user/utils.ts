@@ -1,5 +1,7 @@
 import winston from 'winston';
 import moment from 'moment';
+import bcrypt from 'bcrypt';
+import config from 'config';
 
 const logger = winston.createLogger({
   level: 'silly',
@@ -25,4 +27,8 @@ const capitalizeAllFirstLetters = (string: string): string => {
   return captalizedWords.join(' ');
 };
 
-export { logger, capitalizeAllFirstLetters };
+const hashPassword = (password: string): string => {
+  return bcrypt.hashSync(password, config.get('bcrypt').salt);
+};
+
+export { logger, capitalizeAllFirstLetters, hashPassword };

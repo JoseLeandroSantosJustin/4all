@@ -1,7 +1,10 @@
 import winston from 'winston';
-import { logger, capitalizeAllFirstLetters } from './utils';
+import { logger, capitalizeAllFirstLetters, hashPassword } from './utils';
 import { assert } from 'chai';
 import moment from 'moment';
+import sinon from 'sinon';
+import bcrypt from 'bcrypt';
+import config from 'config';
 
 describe('Unit test user/utils file', () => {
   describe('When setting up logger constant', () => {
@@ -31,6 +34,20 @@ describe('Unit test user/utils file', () => {
           capitalizeAllFirstLetters('jOSE lEANDRO sANTOS jUSTIN'),
           'Jose Leandro Santos Justin'
         );
+      });
+    });
+  });
+
+  describe('When involking "hashPassword"', () => {
+    describe('Should involke "hashSync" from bcrypt', () => {
+      it('With given password And bcrypt.salt state of default config json', () => {
+        const password = '12345678';
+        const bcryptSpy = sinon
+          .spy(bcrypt, 'hashSync')
+          .withArgs(password, config.get('bcrypt').salt);
+
+        hashPassword(password);
+        assert.isTrue(bcryptSpy.calledOnce);
       });
     });
   });
