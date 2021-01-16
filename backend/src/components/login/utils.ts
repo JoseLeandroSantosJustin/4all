@@ -1,5 +1,6 @@
 import winston from 'winston';
 import moment from 'moment';
+import uniqid from 'uniqid';
 
 const logger = winston.createLogger({
   level: 'silly',
@@ -14,4 +15,8 @@ const logger = winston.createLogger({
   ]
 });
 
-export { logger };
+const generateUniqId = (prefix: string): string => {
+  return uniqid(prefix);
+};
+
+export { logger, generateUniqId };
