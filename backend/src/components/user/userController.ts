@@ -25,7 +25,7 @@ const createUser = (
     });
 
     if (receivedValuesValidation.error !== undefined)
-      reject(receivedValuesValidation.error);
+      return reject(receivedValuesValidation.error);
 
     const user = new User(name, email, password);
     userDAL
