@@ -17,16 +17,17 @@ describe('Unit test rental_store/rentalStoreDAL', () => {
     describe('Should involke startConnection, execQuery with select statement and closeConnection', () => {
       it('If there are no errors in the execQuery', async () => {
         const id = 94;
+        const isRented = true;
 
         // @ts-ignore
         sinon.stub(utils, 'startConnection').returns('connection');
         const mysqlMock = sinon.mock(MySQL);
         const execQueryExpectation = mysqlMock
           .expects('execQuery')
-          .withArgs(
+          .withExactArgs(
             'connection',
-            'SELECT me.id, mo.title, md.name, me.is_rented FROM rental_store AS rs INNER JOIN rental_store_has_media AS rshm ON rshm.id_rental_store = rs.id INNER JOIN media AS me ON me.id = rshm.id_media INNER JOIN movie AS mo ON mo.id = me.id_movie  INNER JOIN movie_director AS md ON md.id = mo.id_director WHERE rs.id = ? AND me.is_rented = 0',
-            [id]
+            'SELECT me.id, mo.title, md.name, me.is_rented FROM rental_store AS rs INNER JOIN rental_store_has_media AS rshm ON rshm.id_rental_store = rs.id INNER JOIN media AS me ON me.id = rshm.id_media INNER JOIN movie AS mo ON mo.id = me.id_movie  INNER JOIN movie_director AS md ON md.id = mo.id_director WHERE rs.id = ? AND me.is_rented = ?',
+            [id, isRented]
           )
           .resolves(true);
 
@@ -34,7 +35,7 @@ describe('Unit test rental_store/rentalStoreDAL', () => {
           .expects('closeConnection')
           .returns('');
 
-        await readRentalStoreMoviesByIsRentedState(id).then((result) => {
+        await readRentalStoreMoviesByIsRentedState(id, isRented).then((result) => {
           // @ts-ignore
           execQueryExpectation.verify();
           // @ts-ignore
@@ -45,16 +46,17 @@ describe('Unit test rental_store/rentalStoreDAL', () => {
 
       it('If execQuery throws an error', async () => {
         const id = 94;
+        const isRented = true;
 
         // @ts-ignore
         sinon.stub(utils, 'startConnection').returns('connection');
         const mysqlMock = sinon.mock(MySQL);
         const execQueryExpectation = mysqlMock
           .expects('execQuery')
-          .withArgs(
+          .withExactArgs(
             'connection',
-            'SELECT me.id, mo.title, md.name, me.is_rented FROM rental_store AS rs INNER JOIN rental_store_has_media AS rshm ON rshm.id_rental_store = rs.id INNER JOIN media AS me ON me.id = rshm.id_media INNER JOIN movie AS mo ON mo.id = me.id_movie  INNER JOIN movie_director AS md ON md.id = mo.id_director WHERE rs.id = ? AND me.is_rented = 0',
-            [id]
+            'SELECT me.id, mo.title, md.name, me.is_rented FROM rental_store AS rs INNER JOIN rental_store_has_media AS rshm ON rshm.id_rental_store = rs.id INNER JOIN media AS me ON me.id = rshm.id_media INNER JOIN movie AS mo ON mo.id = me.id_movie  INNER JOIN movie_director AS md ON md.id = mo.id_director WHERE rs.id = ? AND me.is_rented = ?',
+            [id, isRented]
           )
           .rejects('Error caught');
 
@@ -62,7 +64,7 @@ describe('Unit test rental_store/rentalStoreDAL', () => {
           .expects('closeConnection')
           .returns('');
 
-        await readRentalStoreMoviesByIsRentedState(id).catch((error) => {
+        await readRentalStoreMoviesByIsRentedState(id, isRented).catch((error) => {
           // @ts-ignore
           execQueryExpectation.verify();
           // @ts-ignore
