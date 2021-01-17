@@ -39,17 +39,14 @@ const createUserHasToken = (token: string, user: User): Promise<any> => {
   });
 };
 
-const readUserHasTokenByTokenAndId = (
-  token: string,
-  user: User
-): Promise<any> => {
+const readUserHasTokenByToken = (token: string): Promise<Array<any>> => {
   return new Promise((resolve, reject) => {
     const connection = startConnection();
 
     MySQL.execQuery(
       connection,
-      'SELECT * FROM user_has_token WHERE token = ? AND id_user = ?',
-      [token, user.getId()]
+      'SELECT * FROM user_has_token WHERE token = ?',
+      [token]
     )
       .then((result) => {
         MySQL.closeConnection(connection);
@@ -117,7 +114,7 @@ const updateIsConnectedUserHasTokenByTokenAndId = (
 export {
   startConnection,
   createUserHasToken,
-  readUserHasTokenByTokenAndId,
+  readUserHasTokenByToken,
   updateLastAccessDateUserHasTokenByTokenAndId,
   updateIsConnectedUserHasTokenByTokenAndId
 };

@@ -4,7 +4,7 @@ import MySQL from './MySQL';
 import {
   startConnection,
   createUserHasToken,
-  readUserHasTokenByTokenAndId,
+  readUserHasTokenByToken,
   updateLastAccessDateUserHasTokenByTokenAndId,
   updateIsConnectedUserHasTokenByTokenAndId
 } from './loginDAL';
@@ -103,13 +103,10 @@ describe('Unit test login/loginDAL', () => {
     });
   });
 
-  describe('When involking readUserHasTokenByTokenAndId', () => {
+  describe('When involking readUserHasTokenByToken', () => {
     describe('Should involke startConnection, execQuery with select statement and closeConnection', () => {
       it('If there are no errors in the execQuery', async () => {
         const token = 'token';
-        const email = 'teste@teste.com';
-        const password = 'password';
-        const user = new User(email, password);
 
         // @ts-ignore
         sinon.stub(MySQL, 'startConnection').returns('connection');
@@ -118,8 +115,8 @@ describe('Unit test login/loginDAL', () => {
           .expects('execQuery')
           .withArgs(
             'connection',
-            'SELECT * FROM user_has_token WHERE token = ? AND id_user = ?',
-            [token, user.getId()]
+            'SELECT * FROM user_has_token WHERE token = ?',
+            [token]
           )
           .resolves(true);
 
@@ -127,7 +124,7 @@ describe('Unit test login/loginDAL', () => {
           .expects('closeConnection')
           .returns('');
 
-        await readUserHasTokenByTokenAndId(token, user).then((result) => {
+        await readUserHasTokenByToken(token).then((result) => {
           // @ts-ignore
           execQueryExpectation.verify();
           // @ts-ignore
@@ -138,9 +135,6 @@ describe('Unit test login/loginDAL', () => {
 
       it('If execQuery throws an error', async () => {
         const token = 'token';
-        const email = 'teste@teste.com';
-        const password = 'password';
-        const user = new User(email, password);
 
         // @ts-ignore
         sinon.stub(MySQL, 'startConnection').returns('connection');
@@ -149,8 +143,8 @@ describe('Unit test login/loginDAL', () => {
           .expects('execQuery')
           .withArgs(
             'connection',
-            'SELECT * FROM user_has_token WHERE token = ? AND id_user = ?',
-            [token, user.getId()]
+            'SELECT * FROM user_has_token WHERE token = ?',
+            [token]
           )
           .rejects('Error caught');
 
@@ -158,7 +152,7 @@ describe('Unit test login/loginDAL', () => {
           .expects('closeConnection')
           .returns('');
 
-        await readUserHasTokenByTokenAndId(token, user).catch((error) => {
+        await readUserHasTokenByToken(token).catch((error) => {
           // @ts-ignore
           execQueryExpectation.verify();
           // @ts-ignore
