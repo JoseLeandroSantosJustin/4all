@@ -5,17 +5,29 @@ import Media from './Media';
 /**
  * Function to read all available movies from a rental store
  * @param id Rental store ID
+ * @param isRented Media rental state
  */
 const readRentalStoreMoviesByIsRentedState = (
-  id: number
+  id: number,
+  isRented: boolean
 ): Promise<Array<Media>> => {
   return new Promise((resolve, reject) => {
-    const receivedValueValidation = joi.number().required().validate(id);
-    if (receivedValueValidation.error !== undefined)
-      return reject(receivedValueValidation.error);
+    const schema = joi.object({
+      id: joi.number().required(),
+      isRented: joi.boolean().required()
+    });
+
+    const receivedValues = {
+      id: id,
+      isRented: isRented
+    };
+
+    const receivedValuesValidation = schema.validate(receivedValues);
+    if (receivedValuesValidation.error != undefined)
+      return reject(receivedValuesValidation.error);
 
     rentalStoreDAL
-      .readRentalStoreMoviesByIsRentedState(id)
+      .readRentalStoreMoviesByIsRentedState(id, isRented)
       .then((result) => {
         const medias: Array<Media> = [];
 

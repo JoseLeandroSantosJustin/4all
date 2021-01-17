@@ -15,54 +15,113 @@ describe('Unit test rental_store/rentalStoreController', () => {
         it('Is a string', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState('94')
+            .readRentalStoreMoviesByIsRentedState('94', true)
             .catch((error) => {
-              assert.equal(error.message, '"value" must be a number');
+              assert.equal(error.message, '"id" must be a number');
             });
         });
 
         it('Is a boolean', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState(true)
+            .readRentalStoreMoviesByIsRentedState(true, true)
             .catch((error) => {
-              assert.equal(error.message, '"value" must be a number');
+              assert.equal(error.message, '"id" must be a number');
             });
         });
 
         it('Is a array', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState([])
+            .readRentalStoreMoviesByIsRentedState([], true)
             .catch((error) => {
-              assert.equal(error.message, '"value" must be a number');
+              assert.equal(error.message, '"id" must be a number');
             });
         });
 
         it('Is a object', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState({})
+            .readRentalStoreMoviesByIsRentedState({}, true)
             .catch((error) => {
-              assert.equal(error.message, '"value" must be a number');
+              assert.equal(error.message, '"id" must be a number');
             });
         });
 
         it('Is empty', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState(0)
+            .readRentalStoreMoviesByIsRentedState(0, true)
             .catch((error) => {
-              assert.equal(error.message, '"value" is not allowed to be empty');
+              assert.equal(error.message, '"id" is not allowed to be empty');
             });
         });
 
         it('Is undefined', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState(undefined)
+            .readRentalStoreMoviesByIsRentedState(undefined, true)
             .catch((error) => {
-              assert.equal(error.message, '"value" is required');
+              assert.equal(error.message, '"id" is required');
+            });
+        });
+      });
+
+      describe('If isRented is not a boolean', () => {
+        it('Is a string', async () => {
+          await rentalStoreController
+            // @ts-ignore
+            .readRentalStoreMoviesByIsRentedState(94, 'true')
+            .catch((error) => {
+              assert.equal(error.message, '"isRented" must be a boolean');
+            });
+        });
+
+        it('Is a number', async () => {
+          await rentalStoreController
+            // @ts-ignore
+            .readRentalStoreMoviesByIsRentedState(94, 94)
+            .catch((error) => {
+              assert.equal(error.message, '"isRented" must be a boolean');
+            });
+        });
+
+        it('Is a array', async () => {
+          await rentalStoreController
+            // @ts-ignore
+            .readRentalStoreMoviesByIsRentedState(94, [])
+            .catch((error) => {
+              assert.equal(error.message, '"isRented" must be a boolean');
+            });
+        });
+
+        it('Is a object', async () => {
+          await rentalStoreController
+            // @ts-ignore
+            .readRentalStoreMoviesByIsRentedState(94, {})
+            .catch((error) => {
+              assert.equal(error.message, '"isRented" must be a boolean');
+            });
+        });
+
+        it('Is empty', async () => {
+          await rentalStoreController
+            // @ts-ignore
+            .readRentalStoreMoviesByIsRentedState(94, false)
+            .catch((error) => {
+              assert.equal(
+                error.message,
+                '"isRented" is not allowed to be empty'
+              );
+            });
+        });
+
+        it('Is undefined', async () => {
+          await rentalStoreController
+            // @ts-ignore
+            .readRentalStoreMoviesByIsRentedState(94, undefined)
+            .catch((error) => {
+              assert.equal(error.message, '"isRented" is required');
             });
         });
       });
@@ -71,15 +130,16 @@ describe('Unit test rental_store/rentalStoreController', () => {
         describe('With the given parameters', () => {
           it('And it rejects', async () => {
             const id = 94;
+            const isRented = true;
 
             const readRentalStoreMoviesByIsRentedStateExpectation = sinon
               .mock(rentalStoreDAL)
               .expects('readRentalStoreMoviesByIsRentedState')
-              .withArgs(id)
+              .withArgs(id, isRented)
               .rejects(new Error('Error caught'));
 
             await rentalStoreController
-              .readRentalStoreMoviesByIsRentedState(id)
+              .readRentalStoreMoviesByIsRentedState(id, isRented)
               .catch((error) => {
                 // @ts-ignore
                 readRentalStoreMoviesByIsRentedStateExpectation.verify();
@@ -102,13 +162,13 @@ describe('Unit test rental_store/rentalStoreController', () => {
             const readRentalStoreMoviesByIsRentedStateExpectation = sinon
               .mock(rentalStoreDAL)
               .expects('readRentalStoreMoviesByIsRentedState')
-              .withArgs(id)
+              .withArgs(id, isRented)
               .resolves([
                 { id: id, title: title, name: director, is_rented: isRented }
               ]);
 
             await rentalStoreController
-              .readRentalStoreMoviesByIsRentedState(id)
+              .readRentalStoreMoviesByIsRentedState(id, isRented)
               .then((result) => {
                 // @ts-ignore
                 readRentalStoreMoviesByIsRentedStateExpectation.verify();
