@@ -35,13 +35,15 @@ describe('Unit test rental_store/rentalStoreDAL', () => {
           .expects('closeConnection')
           .returns('');
 
-        await readRentalStoreMoviesByIsRentedState(id, isRented).then((result) => {
-          // @ts-ignore
-          execQueryExpectation.verify();
-          // @ts-ignore
-          closeConnectionExpectation.verify();
-          assert.isTrue(result);
-        });
+        await readRentalStoreMoviesByIsRentedState(id, isRented).then(
+          (result) => {
+            // @ts-ignore
+            execQueryExpectation.verify();
+            // @ts-ignore
+            closeConnectionExpectation.verify();
+            assert.isTrue(result);
+          }
+        );
       });
 
       it('If execQuery throws an error', async () => {
@@ -64,13 +66,15 @@ describe('Unit test rental_store/rentalStoreDAL', () => {
           .expects('closeConnection')
           .returns('');
 
-        await readRentalStoreMoviesByIsRentedState(id, isRented).catch((error) => {
-          // @ts-ignore
-          execQueryExpectation.verify();
-          // @ts-ignore
-          closeConnectionExpectation.verify();
-          assert.equal(error, 'Error caught');
-        });
+        await readRentalStoreMoviesByIsRentedState(id, isRented).catch(
+          (error) => {
+            // @ts-ignore
+            execQueryExpectation.verify();
+            // @ts-ignore
+            closeConnectionExpectation.verify();
+            assert.equal(error, 'Error caught');
+          }
+        );
       });
     });
   });
