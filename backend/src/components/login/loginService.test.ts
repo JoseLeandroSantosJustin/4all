@@ -48,7 +48,29 @@ describe('Unit test login/loginService', () => {
             });
         });
 
-        it('If the found user has a expered token', async () => {
+        it('If the found user has a token already discarded', async () => {
+          const token = 'token';
+
+          const readUserHasTokenByTokenExpectation = sinon
+            .mock(loginDAL)
+            .expects('readUserHasTokenByToken')
+            .withArgs(token)
+            .resolves([{ is_connected: 0 }]);
+
+          await request(app)
+            .get('/test')
+            .set({ Authorization: token })
+            .expect(401)
+            .then((result) => {
+              // @ts-ignore
+              readUserHasTokenByTokenExpectation.verify();
+              assert.deepEqual(result.body, {
+                error: 'Authentication failed, try again with another token'
+              });
+            });
+        });
+
+        it('If the found user has a expired token ', async () => {
           const token = 'token';
 
           const readUserHasTokenByTokenExpectation = sinon

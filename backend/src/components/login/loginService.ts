@@ -16,7 +16,7 @@ const authenticationExpressRouter = (
 
   readUserHasTokenByToken(token)
     .then((result) => {
-      if (result.length === 0) {
+      if (result.length === 0 || result[0].is_connected == 0) {
         res
           .status(401)
           .type('application/json')
