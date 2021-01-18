@@ -27,7 +27,7 @@
       - 500: System error
     - Body example
       - Success: 
-        - { "data": [ { "id": 1, "name": "Example", "email": "example@example.com", "password": "Password is hidden" } ] }
+        - { "data": { "id": 1, "name": "Example", "email": "example@example.com", "password": "Password is hidden" } }
       - Error :
         - { "error": "Some error message" }
 
@@ -44,7 +44,7 @@
       - 500: System error
     - Body example
       - Success: 
-        - { "data": [ "id": 1, "email": "example@example.com", "password": "Password is hidden", "token": "tokenExample" ] }
+        - { "data": { "id": 1, "email": "example@example.com", "password": "Password is hidden", "token": "tokenExample" } }
       - Error :
         - { "error": "Some error message" }
 
@@ -59,7 +59,7 @@
       - 500: System error
     - Body example
       - Success: 
-        - { "data": [ "id": 1, "token": "tokenExample", "message": "Disconnected" ] }
+        - { "data": { "id": 1, "token": "tokenExample", "message": "Disconnected" } }
       - Error :
         - { "error": "Some error message" }
 

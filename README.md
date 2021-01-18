@@ -11,6 +11,7 @@ Para efetuar o processo de build, seguir os passos abaixo:
 ```javascript
 git clone https://github.com/JoseLeandroSantosJustin/4all.git
 cd 4all/backend/
+mkdir logs
 npm install
 npm run build
 ```
@@ -29,7 +30,15 @@ Estando com os serviços configurados basta acessar a pasta */4all/backend* e ex
 Com o intuito de facilitar os processos de build e deploy o sistema foi dividido em 2 docker containers: 4alldatabasecontainer e 4allbackendcontainer
 
 #### Deploy
-Para os processo de build e deploy com o Docker basta executar o comando **docker-compose up** da raiz da pasta clonada */4all*
+Para os processos de build e deploy com o Docker é necessário criar o diretorio de log em */4all/backend* e então executar o comando **docker-compose up** da raiz da pasta clonada */4all*, por exemplo:
+```bash
+git clone https://github.com/JoseLeandroSantosJustin/4all.git
+cd 4all/
+mkdir backend/logs
+docker-compose up
+```
+
+> CUIDADO: É necessário esperar a mensagem **4alldatabasecontainer | ... [System] [MY-010931] [Server] /usr/sbin/mysqld: ready for connections. Version: '8.0.22'  socket: '/var/run/mysqld/mysqld.sock'  port: 3306  MySQL Community Server - GPL.** ser exibida no terminal, caso alguma requisição seja executada antes o resultado será *{ "error": "Unknown system error" }*
 
 # Documentação da API
 A documentação da API se encontra [aqui](./documentation/documentation.md)
