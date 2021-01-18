@@ -15,7 +15,7 @@ describe('Unit test rental_store/rentalStoreController', () => {
         it('Is a string', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState('94', true)
+            .readRentalStoreMoviesByIsRentedState('string', true)
             .catch((error) => {
               assert.equal(error.message, '"id" must be a number');
             });
@@ -48,15 +48,6 @@ describe('Unit test rental_store/rentalStoreController', () => {
             });
         });
 
-        it('Is empty', async () => {
-          await rentalStoreController
-            // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState(0, true)
-            .catch((error) => {
-              assert.equal(error.message, '"id" is not allowed to be empty');
-            });
-        });
-
         it('Is undefined', async () => {
           await rentalStoreController
             // @ts-ignore
@@ -71,7 +62,7 @@ describe('Unit test rental_store/rentalStoreController', () => {
         it('Is a string', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState(94, 'true')
+            .readRentalStoreMoviesByIsRentedState(94, 'string')
             .catch((error) => {
               assert.equal(error.message, '"isRented" must be a boolean');
             });
@@ -101,18 +92,6 @@ describe('Unit test rental_store/rentalStoreController', () => {
             .readRentalStoreMoviesByIsRentedState(94, {})
             .catch((error) => {
               assert.equal(error.message, '"isRented" must be a boolean');
-            });
-        });
-
-        it('Is empty', async () => {
-          await rentalStoreController
-            // @ts-ignore
-            .readRentalStoreMoviesByIsRentedState(94, false)
-            .catch((error) => {
-              assert.equal(
-                error.message,
-                '"isRented" is not allowed to be empty'
-              );
             });
         });
 
@@ -188,7 +167,7 @@ describe('Unit test rental_store/rentalStoreController', () => {
         it('Is a string', async () => {
           await rentalStoreController
             // @ts-ignore
-            .readRentalStoreMoviesByMovieTitle('94', 'Teste')
+            .readRentalStoreMoviesByMovieTitle('string', 'Teste')
             .catch((error) => {
               assert.equal(error.message, '"id" must be a number');
             });
@@ -218,15 +197,6 @@ describe('Unit test rental_store/rentalStoreController', () => {
             .readRentalStoreMoviesByMovieTitle({}, 'Teste')
             .catch((error) => {
               assert.equal(error.message, '"id" must be a number');
-            });
-        });
-
-        it('Is empty', async () => {
-          await rentalStoreController
-            // @ts-ignore
-            .readRentalStoreMoviesByMovieTitle(0, 'Teste')
-            .catch((error) => {
-              assert.equal(error.message, '"id" is not allowed to be empty');
             });
         });
 
@@ -358,7 +328,7 @@ describe('Unit test rental_store/rentalStoreController', () => {
         it('Is a string', async () => {
           await rentalStoreController
             // @ts-ignore
-            .updateMediaById('94', true)
+            .updateMediaById('string', true)
             .catch((error) => {
               assert.equal(error.message, '"id" must be a number');
             });
@@ -391,15 +361,6 @@ describe('Unit test rental_store/rentalStoreController', () => {
             });
         });
 
-        it('Is empty', async () => {
-          await rentalStoreController
-            // @ts-ignore
-            .updateMediaById(0, true)
-            .catch((error) => {
-              assert.equal(error.message, '"id" is not allowed to be empty');
-            });
-        });
-
         it('Is undefined', async () => {
           await rentalStoreController
             // @ts-ignore
@@ -414,7 +375,7 @@ describe('Unit test rental_store/rentalStoreController', () => {
         it('Is a string', async () => {
           await rentalStoreController
             // @ts-ignore
-            .updateMediaById(94, 'true')
+            .updateMediaById(94, 'string')
             .catch((error) => {
               assert.equal(error.message, '"isRented" must be a boolean');
             });
@@ -444,18 +405,6 @@ describe('Unit test rental_store/rentalStoreController', () => {
             .updateMediaById(94, {})
             .catch((error) => {
               assert.equal(error.message, '"isRented" must be a boolean');
-            });
-        });
-
-        it('Is empty', async () => {
-          await rentalStoreController
-            // @ts-ignore
-            .updateMediaById(94, false)
-            .catch((error) => {
-              assert.equal(
-                error.message,
-                '"isRented" is not allowed to be empty'
-              );
             });
         });
 

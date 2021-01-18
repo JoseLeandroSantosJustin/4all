@@ -334,7 +334,7 @@ describe('Unit test login/loginController', () => {
         it('Is a string', async () => {
           await loginController
             // @ts-ignore
-            .logout('token', 94)
+            .logout('token', 'string')
             .catch((error) => {
               assert.equal(error.message, '"id" must be a number');
             });
@@ -364,15 +364,6 @@ describe('Unit test login/loginController', () => {
             .logout('token', {})
             .catch((error) => {
               assert.equal(error.message, '"id" must be a number');
-            });
-        });
-
-        it('Is empty', async () => {
-          await loginController
-            // @ts-ignore
-            .logout('token', 0)
-            .catch((error) => {
-              assert.equal(error.message, '"id" is not allowed to be empty');
             });
         });
 
