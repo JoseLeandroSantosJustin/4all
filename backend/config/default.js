@@ -1,13 +1,13 @@
 module.exports = {
   mysql: {
-    database: '4all_rental_store',
+    database: '4all_database',
     username: '4all_user',
-    password: '12345678',
-    host: 'localhost',
+    password: '4all_password',
+    host: 'database',
     port: 3306
   },
   node: {
-    port: 8080
+    port: 8081
   },
   bcrypt: {
     salt: 10
