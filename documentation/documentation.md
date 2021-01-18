@@ -1,12 +1,17 @@
-# 4all Rental Store
-## Endpoints
+# Endpoints
 ### /users
 - GET **/users**
   - Description: Return all users
   - Responses:
-    - 200: Users found
-    - 204: No registered users
-    - 500: System error
+    - Code:
+      - 200: Users found
+      - 204: No registered users
+      - 500: System error
+    - Body example
+      - Success: 
+        - { "data": [ { "id": 1, "name": "Teste", "email": "teste@teste.com", "password": "Password is hidden" } ] }
+      - Error :
+        - { "error": "Some error message" }
 
 - POST **/users**
   - Description: Create a new user
@@ -15,10 +20,16 @@
     - password: string *required*
     - name: string *required*
   - Responses:
-    - 201: Created user
-    - 204: No registered users
-    - 400: Request problems
-    - 500: System error
+    - Code:
+      - 201: Created user
+      - 204: No registered users
+      - 400: Request problems
+      - 500: System error
+    - Body example
+      - Success: 
+        - { "data": [ { "id": 1, "name": "Example", "email": "example@example.com", "password": "Password is hidden" } ] }
+      - Error :
+        - { "error": "Some error message" }
 
 ### /login
 - POST **/login/logon**
@@ -27,18 +38,30 @@
     - email: string *required*
     - password: string *required*
   - Responses:
-    - 200: Created token
-    - 400: Request problems
-    - 500: System error
+    - Code:
+      - 200: Created token
+      - 400: Request problems
+      - 500: System error
+    - Body example
+      - Success: 
+        - { "data": [ "id": 1, "email": "example@example.com", "password": "Password is hidden", "token": "tokenExample" ] }
+      - Error :
+        - { "error": "Some error message" }
 
 - POST **/login/logout/:id**
   - Description: Disables a token
   - Body:
     - token: string *required*
   - Responses:
-    - 200: Token disabled
-    - 400: Request problems
-    - 500: System error
+    - Code:
+      - 200: Token disabled
+      - 400: Request problems
+      - 500: System error
+    - Body example
+      - Success: 
+        - { "data": [ "id": 1, "token": "tokenExample", "message": "Disconnected" ] }
+      - Error :
+        - { "error": "Some error message" }
 
 ### /rental-store
 - GET **/rental-store/:id/movies**
@@ -49,11 +72,17 @@
     - isRented: boolean *optional*
     - title: string *optional*
   - Responses:
-    - 200: Movies found
-    - 204: No available movies
-    - 400: Request problems
-    - 401: Unauthorized token
-    - 500: System error
+    - Code:
+      - 200: Movies found
+      - 204: No available movies
+      - 400: Request problems
+      - 401: Unauthorized token
+      - 500: System error
+    - Body example
+      - Success: 
+        - { "data": [ { "isRented": 0, "idMedia": 1, "title": "Movie example", "director": "Director example" } ] }
+      - Error :
+        - { "error": "Some error message" }
 
 - POST **/rental-store/:idRentalStore/media/:idMedia**
   - Description: Changes media state
@@ -62,7 +91,13 @@
   - Body
     - isRented: boolean *required*
   - Responses:
-    - 200: Updated media state
-    - 400: Request problems
-    - 401: Unauthorized token
-    - 500: System error
+    - Code:
+      - 200: Updated media state
+      - 400: Request problems
+      - 401: Unauthorized token
+      - 500: System error
+    - Body example
+      - Success: 
+        - { "data": { "id": "1", "isRented": true, "message": "Media updated" } }
+      - Error :
+        - { "error": "Some error message" }
