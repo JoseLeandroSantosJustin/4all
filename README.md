@@ -35,6 +35,6 @@ Para os processo de build e deploy com o Docker basta executar o comando **docke
 A documentação da API se encontra [aqui](./documentation/documentation.md)
 
 # Testes
-Foram criados 194 testes unitários do quais contemplam 96% da aplicação segundo o modulo NYC. Para a execução dos testes é necessário seguir os passo sendo utilizando os serviços na pópria maquina e então executar o comando **npm run coverage** do diretório */4all/backend*
+Foram criados 192 testes unitários do quais contemplam 96% da aplicação segundo o modulo NYC. Para a execução dos testes é necessário seguir os passo sendo utilizando os serviços na pópria maquina e então executar o comando **npm run coverage** do diretório */4all/backend*
 
 ![](./documentation/images/test.png)
