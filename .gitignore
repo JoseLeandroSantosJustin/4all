@@ -15,3 +15,6 @@ database/data
 
 # Logs
 backend/logs
+
+# Transpiled files folder
+dist
