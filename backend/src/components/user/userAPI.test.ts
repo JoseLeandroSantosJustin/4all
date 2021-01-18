@@ -32,7 +32,9 @@ describe('Unit test user/userAPI', () => {
             .then((result) => {
               // @ts-ignore
               readAllUsersExpectation.verify();
-              assert.deepEqual(result.body, ['user']);
+              assert.deepEqual(result.body, {
+                data: ['user']
+              });
             });
         });
       });
@@ -77,8 +79,13 @@ describe('Unit test user/userAPI', () => {
               readAllUsersExpectation.verify();
               // @ts-ignore
               errorHandlerExpectation.verify();
-              // @ts-ignore
-              assert.equal(result.error.text, 'message');
+              assert.equal(
+                // @ts-ignore
+                result.error.text,
+                JSON.stringify({
+                  error: 'message'
+                })
+              );
             });
         });
       });
@@ -110,7 +117,9 @@ describe('Unit test user/userAPI', () => {
             .then((result) => {
               // @ts-ignore
               createUserExpectation.verify();
-              assert.deepEqual(result.body, user);
+              assert.deepEqual(result.body, {
+                data: user
+              });
             });
         });
       });
@@ -146,8 +155,13 @@ describe('Unit test user/userAPI', () => {
               createUserExpectation.verify();
               // @ts-ignore
               errorHandlerExpectation.verify();
-              // @ts-ignore
-              assert.equal(result.error.text, 'message');
+              assert.equal(
+                // @ts-ignore
+                result.error.text,
+                JSON.stringify({
+                  error: 'message'
+                })
+              );
             });
         });
       });

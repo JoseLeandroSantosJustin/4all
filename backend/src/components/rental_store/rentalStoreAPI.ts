@@ -4,18 +4,36 @@ import { errorHandler } from './rentalStoreErrors';
 
 const rentalStoreExpressRouter = Router();
 
+const responseFormat = (
+  res,
+  statusCode: number,
+  result: any,
+  success: boolean
+) => {
+  if (success) {
+    res.status(statusCode).json({ data: result }).end();
+  } else {
+    res.status(statusCode).json({ error: result }).end();
+  }
+};
+
 rentalStoreExpressRouter.get('/:id/movies?', (req, res) => {
   if (req.query.title !== undefined) {
     rentalStoreController
       //@ts-ignore
       .readRentalStoreMoviesByMovieTitle(req.params.id, req.query.title)
       .then((result) => {
-        res.status(200).send(result).end();
+        responseFormat(res, 200, result, true);
       })
       .catch((error) => {
         const errorHandled = errorHandler(error);
 
-        res.status(errorHandled.statusCode).send(errorHandled.message).end();
+        responseFormat(
+          res,
+          errorHandled.statusCode,
+          errorHandled.message,
+          false
+        );
       });
   } else {
     rentalStoreController
@@ -25,12 +43,17 @@ rentalStoreExpressRouter.get('/:id/movies?', (req, res) => {
         req.query.isRented === 'true' ? true : false
       )
       .then((result) => {
-        res.status(200).send(result).end();
+        responseFormat(res, 200, result, true);
       })
       .catch((error) => {
         const errorHandled = errorHandler(error);
 
-        res.status(errorHandled.statusCode).send(errorHandled.message).end();
+        responseFormat(
+          res,
+          errorHandled.statusCode,
+          errorHandled.message,
+          false
+        );
       });
   }
 });
@@ -40,12 +63,12 @@ rentalStoreExpressRouter.post('/:idRentalStore/media/:idMedia', (req, res) => {
     //@ts-ignore
     .updateMediaById(req.params.idMedia, req.body.isRented)
     .then((result) => {
-      res.status(200).send(result).end();
+      responseFormat(res, 200, result, true);
     })
     .catch((error) => {
       const errorHandled = errorHandler(error);
 
-      res.status(errorHandled.statusCode).send(errorHandled.message).end();
+      responseFormat(res, errorHandled.statusCode, errorHandled.message, false);
     });
 });
 

@@ -38,7 +38,7 @@ describe('Unit test login/loginAPI', () => {
           .then((result) => {
             // @ts-ignore
             logonExpectation.verify();
-            assert.deepEqual(result.body, { message: 'Result' });
+            assert.deepEqual(result.body, { data: { message: 'Result' } });
           });
       });
     });
@@ -73,8 +73,13 @@ describe('Unit test login/loginAPI', () => {
             logonExpectation.verify();
             // @ts-ignore
             errorHandlerExpectation.verify();
-            // @ts-ignore
-            assert.deepEqual(result.error.text, 'Error caught');
+            assert.deepEqual(
+              // @ts-ignore
+              result.error.text,
+              JSON.stringify({
+                error: 'Error caught'
+              })
+            );
           });
       });
     });
@@ -100,7 +105,7 @@ describe('Unit test login/loginAPI', () => {
           .then((result) => {
             // @ts-ignore
             logoutExpectation.verify();
-            assert.deepEqual(result.body, { message: 'Result' });
+            assert.deepEqual(result.body, { data: { message: 'Result' } });
           });
       });
     });
@@ -133,8 +138,13 @@ describe('Unit test login/loginAPI', () => {
             logoutExpectation.verify();
             // @ts-ignore
             errorHandlerExpectation.verify();
-            // @ts-ignore
-            assert.deepEqual(result.error.text, 'Error caught');
+            assert.deepEqual(
+              // @ts-ignore
+              result.error.text,
+              JSON.stringify({
+                error: 'Error caught'
+              })
+            );
           });
       });
     });

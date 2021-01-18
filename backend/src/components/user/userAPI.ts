@@ -4,20 +4,33 @@ import { errorHandler } from './userErrors';
 
 const userExpressRouter = Router();
 
+const responseFormat = (
+  res,
+  statusCode: number,
+  result: any,
+  success: boolean
+) => {
+  if (success) {
+    res.status(statusCode).json({ data: result }).end();
+  } else {
+    res.status(statusCode).json({ error: result }).end();
+  }
+};
+
 userExpressRouter.get('', (req, res) => {
   userController
     .readAllUsers()
     .then((result) => {
       if (result.length > 0) {
-        res.status(200).send(result).end();
+        responseFormat(res, 200, result, true);
       } else {
-        res.status(204).send(result).end();
+        responseFormat(res, 204, result, true);
       }
     })
     .catch((error) => {
       const errorHandled = errorHandler(error);
 
-      res.status(errorHandled.statusCode).send(errorHandled.message).end();
+      responseFormat(res, errorHandled.statusCode, errorHandled.message, false);
     });
 });
 
@@ -25,12 +38,12 @@ userExpressRouter.post('', (req, res) => {
   userController
     .createUser(req.body.email, req.body.password, req.body.name)
     .then((result) => {
-      res.status(201).send(result).end();
+      responseFormat(res, 201, result, true);
     })
     .catch((error) => {
       const errorHandled = errorHandler(error);
 
-      res.status(errorHandled.statusCode).send(errorHandled.message).end();
+      responseFormat(res, errorHandled.statusCode, errorHandled.message, false);
     });
 });
 

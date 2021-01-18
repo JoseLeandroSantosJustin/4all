@@ -25,7 +25,7 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .mock(rentalStoreController)
             .expects('readRentalStoreMoviesByMovieTitle')
             .withArgs('94', 'Test')
-            .resolves([{}]);
+            .resolves([{ message: 'All movies' }]);
 
           await request(app)
             .get('/rental-store/94/movies?title=Test')
@@ -33,7 +33,9 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .then((result) => {
               // @ts-ignore
               readRentalStoreMoviesByMovieTitleExpectation.verify();
-              assert.deepEqual(result.body, [{}]);
+              assert.deepEqual(result.body, {
+                data: [{ message: 'All movies' }]
+              });
             });
         });
 
@@ -60,8 +62,13 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
                 readRentalStoreMoviesByMovieTitleExpectation.verify();
                 // @ts-ignore
                 errorHandlerExpectation.verify();
-                // @ts-ignore
-                assert.equal(result.error.text, 'message');
+                assert.equal(
+                  // @ts-ignore
+                  result.error.text,
+                  JSON.stringify({
+                    error: 'message'
+                  })
+                );
               });
           });
         });
@@ -75,7 +82,7 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .mock(rentalStoreController)
             .expects('readRentalStoreMoviesByIsRentedState')
             .withArgs('94', false)
-            .resolves([{}]);
+            .resolves([{ message: 'All movies' }]);
 
           await request(app)
             .get('/rental-store/94/movies')
@@ -83,7 +90,9 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .then((result) => {
               // @ts-ignore
               readRentalStoreMoviesByIsRentedStateExpectation.verify();
-              assert.deepEqual(result.body, [{}]);
+              assert.deepEqual(result.body, {
+                data: [{ message: 'All movies' }]
+              });
             });
         });
 
@@ -92,7 +101,7 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .mock(rentalStoreController)
             .expects('readRentalStoreMoviesByIsRentedState')
             .withArgs('94', true)
-            .resolves([{}]);
+            .resolves([{ message: 'All movies' }]);
 
           await request(app)
             .get('/rental-store/94/movies?isRented=true')
@@ -100,7 +109,9 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .then((result) => {
               // @ts-ignore
               readRentalStoreMoviesByIsRentedStateExpectation.verify();
-              assert.deepEqual(result.body, [{}]);
+              assert.deepEqual(result.body, {
+                data: [{ message: 'All movies' }]
+              });
             });
         });
 
@@ -127,8 +138,13 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
                 readRentalStoreMoviesByIsRentedStateExpectation.verify();
                 // @ts-ignore
                 errorHandlerExpectation.verify();
-                // @ts-ignore
-                assert.equal(result.error.text, 'message');
+                assert.equal(
+                  // @ts-ignore
+                  result.error.text,
+                  JSON.stringify({
+                    error: 'message'
+                  })
+                );
               });
           });
         });
@@ -157,7 +173,9 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             .then((result) => {
               // @ts-ignore
               updateMediaByIdExpectation.verify();
-              assert.deepEqual(result.body, { message: 'Media updated' });
+              assert.deepEqual(result.body, {
+                data: { message: 'Media updated' }
+              });
             });
         });
       });
@@ -190,8 +208,13 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
               updateMediaByIdExpectation.verify();
               // @ts-ignore
               errorHandlerExpectation.verify();
-              // @ts-ignore
-              assert.equal(result.error.text, 'message');
+              assert.equal(
+                // @ts-ignore
+                result.error.text,
+                JSON.stringify({
+                  error: 'message'
+                })
+              );
             });
         });
       });
