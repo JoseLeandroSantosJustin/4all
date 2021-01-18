@@ -1,0 +1,26 @@
+version: "3.6"
+services:
+  backend:
+    container_name: 4allbackendcontainer
+    image: 4all/backend
+    restart: always
+    build: ./backend
+    volumes:
+      - ./backend/logs:/node/logs
+    ports:
+      - 8081:8081
+  database:
+    container_name: 4alldatabasecontainer
+    image: 4all/database
+    build: ./database
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "12345678"
+      MYSQL_DATABASE: "4all_database"
+      MYSQL_USER: "4all_user"
+      MYSQL_PASSWORD: "4all_password"
+    volumes:
+      - ./database/data:/var/lib/mysql
+    ports:
+      - 3307:3306
