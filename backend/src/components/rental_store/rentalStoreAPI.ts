@@ -23,7 +23,11 @@ rentalStoreExpressRouter.get('/:id/movies?', (req, res) => {
       //@ts-ignore
       .readRentalStoreMoviesByMovieTitle(req.params.id, req.query.title)
       .then((result) => {
-        responseFormat(res, 200, result, true);
+        if (result.length > 0) {
+          responseFormat(res, 200, result, true);
+        } else {
+          responseFormat(res, 204, result, true);
+        }
       })
       .catch((error) => {
         const errorHandled = errorHandler(error);
@@ -43,7 +47,11 @@ rentalStoreExpressRouter.get('/:id/movies?', (req, res) => {
         req.query.isRented === 'true' ? true : false
       )
       .then((result) => {
-        responseFormat(res, 200, result, true);
+        if (result.length > 0) {
+          responseFormat(res, 200, result, true);
+        } else {
+          responseFormat(res, 204, result, true);
+        }
       })
       .catch((error) => {
         const errorHandled = errorHandler(error);

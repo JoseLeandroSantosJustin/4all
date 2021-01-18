@@ -39,6 +39,23 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
             });
         });
 
+        it('Then return status code 204', async () => {
+          const readRentalStoreMoviesByMovieTitleExpectation = sinon
+            .mock(rentalStoreController)
+            .expects('readRentalStoreMoviesByMovieTitle')
+            .withArgs('94', 'Test')
+            .resolves([]);
+
+          await request(app)
+            .get('/rental-store/94/movies?title=Test')
+            .expect(204)
+            .then((result) => {
+              // @ts-ignore
+              readRentalStoreMoviesByMovieTitleExpectation.verify();
+              assert.deepEqual(result.body, {});
+            });
+        });
+
         describe('Then return the handled status code and message', () => {
           it('If rentalStoreController.readRentalStoreMoviesByMovieTitle throws an error', async () => {
             const error = new Error('Error caught');
@@ -112,6 +129,23 @@ describe('Unit test rental_store/rentalStoreAPI', () => {
               assert.deepEqual(result.body, {
                 data: [{ message: 'All movies' }]
               });
+            });
+        });
+
+        it('Then return status code 204', async () => {
+          const readRentalStoreMoviesByIsRentedStateExpectation = sinon
+            .mock(rentalStoreController)
+            .expects('readRentalStoreMoviesByIsRentedState')
+            .withArgs('94', false)
+            .resolves([]);
+
+          await request(app)
+            .get('/rental-store/94/movies')
+            .expect(204)
+            .then((result) => {
+              // @ts-ignore
+              readRentalStoreMoviesByIsRentedStateExpectation.verify();
+              assert.deepEqual(result.body, {});
             });
         });
 
